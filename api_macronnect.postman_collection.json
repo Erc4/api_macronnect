@@ -1,0 +1,322 @@
+{
+  "info": {
+    "_postman_id": "b6dfa0e9-81d9-4698-99ad-da1605f8ae2a",
+    "name": "api_macronnect",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "37952289",
+    "_collection_link": "https://go.postman.co/collection/37952289-b6dfa0e9-81d9-4698-99ad-da1605f8ae2a?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Login",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "// 1. Validaciones (tests automatizados)\r",
+              "pm.test(\"Status code es 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "const body = pm.response.json();\r",
+              "\r",
+              "pm.test(\"La respuesta incluye un token\", function () {\r",
+              "    pm.expect(body.token).to.be.a(\"string\").and.to.not.be.empty;\r",
+              "});\r",
+              "\r",
+              "pm.test(\"El tipo de token es Bearer\", function () {\r",
+              "    pm.expect(body.tipo).to.eql(\"Bearer\");\r",
+              "});\r",
+              "\r",
+              "// 2. Guardar el token en el environment para reutilizarlo automáticamente\r",
+              "if (body.token) {\r",
+              "    pm.environment.set(\"token\", body.token);\r",
+              "    console.log(\"Token guardado en el environment 'Local'.\");\r",
+              "}"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"username\": \"admin\",\r\n  \"password\": \"admin123\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/auth/login",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "auth",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Crear categoria",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"nombre\": \"Teclados\",\r\n  \"descripcion\": \"Teclados mecánicos, magnéticos y de membrana\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/categorias",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "categorias"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Listar categorias",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/categorias?page=0&size=10&sort=id,asc",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "categorias"
+          ],
+          "query": [
+            {
+              "key": "page",
+              "value": "0"
+            },
+            {
+              "key": "size",
+              "value": "10"
+            },
+            {
+              "key": "sort",
+              "value": "id,asc"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Actualizar categoria",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"nombre\": \"Teclados nuevo\",\r\n  \"descripcion\": \"Teclados mecánicos, magnéticos y de membrana\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/categorias/1",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "categorias",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/categorias/1",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "categorias",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Crear art",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"codigo\": \"KB-001\",\r\n  \"nombre\": \"Teclado 2\",\r\n  \"descripcion\": \"Switches Outemu Red\",\r\n  \"precio\": 999.00,\r\n  \"stock\": 18,\r\n  \"categoriaId\": 1\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/articulos",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "articulos"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Crear cliente",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"nombre\": \"Eric Amezcua\",\r\n  \"email\": \"ericamezcua3@gmail.com\",\r\n  \"telefono\": \"6682556079\",\r\n  \"direccion\": \"Blvd. Rosales 1114. Jiquilpan. Los Mochis, Sinaloa\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/clientes",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "clientes"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Crear Venta",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"clienteId\": 1,\r\n  \"detalles\": [\r\n    { \"articuloId\": 1, \"cantidad\": 1 },\r\n    { \"articuloId\": 2, \"cantidad\": 1 }\r\n  ]\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/ventas",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "ventas"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Filtros ventas",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": []
+    },
+    {
+      "name": "Detalle ventas",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": []
+    },
+    {
+      "name": "Cancelar venta",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/ventas/1/cancelar",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "ventas",
+            "1",
+            "cancelar"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ]
+}
