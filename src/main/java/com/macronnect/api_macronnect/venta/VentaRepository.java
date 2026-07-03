@@ -38,7 +38,7 @@ public interface VentaRepository extends JpaRepository<Venta, Long> {
             + "(:desde IS NULL OR v.fechaCreacion >= :desde) AND "
             + "(:hasta IS NULL OR v.fechaCreacion <= :hasta)")
     Page<Venta> buscarConFiltros(@Param("clienteId") Long clienteId,
-                                 @Param("desde") LocalDateTime desde,
-                                 @Param("hasta") LocalDateTime hasta,
-                                 Pageable pageable);
+    @Param("desde") LocalDateTime desde,
+    @Param("hasta") LocalDateTime hasta,
+    Pageable pageable);
 }
